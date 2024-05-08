@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IOficioDBRepository {
     String getImage(int id) throws SQLException;
-    List<Oficio> getAll() throws SQLException;
+    List<Oficio> getById(int id) throws SQLException;
 
 }

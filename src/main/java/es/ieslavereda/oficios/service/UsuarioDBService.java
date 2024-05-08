@@ -16,4 +16,16 @@ public class UsuarioDBService {
     public List<Usuario> getAll() throws SQLException {
         return usuarioDBRepository.getAll();
     }
+
+    public Usuario addUsuario(Usuario usuario) throws SQLException{
+        return usuarioDBRepository.addUser(usuario);
+    }
+
+    public Usuario updateUser(Usuario usuario) throws SQLException{
+        return usuarioDBRepository.updateUser(usuario);
+    }
+
+    public int deleteUser(int id) throws SQLException{
+        return usuarioDBRepository.deleteUser(id);
+    }
 }

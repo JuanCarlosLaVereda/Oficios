@@ -18,8 +18,22 @@ public class UsuarioDBRepository implements IUsuarioDBRepository{
     private DataSource dataSource;
 
     @Override
-    public int adduser(Usuario usuario) throws SQLException {
-        return 0;
+    public Usuario addUser(Usuario usuario) throws SQLException {
+        String query = "{call crear_usuario(?,?,?,?,?)}";
+        int resultado = 0;
+        try (Connection connection = dataSource.getConnection();
+        CallableStatement cs = connection.prepareCall(query)){
+
+            cs.setInt(2,usuario.getId());
+            cs.setString(3,usuario.getNombre());
+            cs.setString(4,usuario.getApellidos());
+            cs.setInt(5,usuario.getIdOficio());
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.executeUpdate();
+            resultado = cs.getInt(1);
+        }
+        usuario.setId(resultado);
+        return  usuario;
     }
 
     @Override
@@ -43,12 +57,35 @@ public class UsuarioDBRepository implements IUsuarioDBRepository{
     }
 
     @Override
-    public int updateUser(Usuario usuario) throws SQLException {
-        return 0;
+    public Usuario updateUser(Usuario usuario) throws SQLException {
+        String query = "{? = call actualizar_usuario(?,?,?,?)}";
+
+        try (Connection connection = dataSource.getConnection();
+        CallableStatement cs = connection.prepareCall(query)){
+            cs.setInt(2,usuario.getId());
+            cs.setString(3,usuario.getNombre());
+            cs.setString(4,usuario.getApellidos());
+            cs.setInt(5,usuario.getIdOficio());
+
+            cs.executeUpdate();
+
+        }
+
+        return usuario;
     }
 
     @Override
-    public int deleteUser(Usuario usuario) throws SQLException {
-        return 0;
+    public int deleteUser(int id) throws SQLException {
+        String query = "{? = call eliminar_usuario(?)}";
+        int resultado = 0;
+
+        try (Connection connection = dataSource.getConnection();
+        CallableStatement cs = connection.prepareCall(query)){
+            cs.setInt(2, id);
+            resultado = cs.executeUpdate();
+
+        }
+
+        return resultado;
     }
 }

@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUsuarioDBRepository {
-    int adduser(Usuario usuario) throws SQLException;
+    Usuario addUser(Usuario usuario) throws SQLException;
     List<Usuario> getAll() throws SQLException;
-    int updateUser (Usuario usuario) throws SQLException;
-    int deleteUser (Usuario usuario) throws SQLException;
+    Usuario updateUser (Usuario usuario) throws SQLException;
+    int deleteUser(int id) throws SQLException;
 }
